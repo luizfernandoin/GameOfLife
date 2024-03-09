@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 
-const int TAMANHO = 3;
+const int TAMANHO = 50;
 
 int randomNumber() {
     return rand() % 2; 
@@ -22,7 +22,7 @@ void fillRandom(int currentGenerationMatrix[TAMANHO][TAMANHO]) {
 }
 
 void printMatrix(int matrix[TAMANHO][TAMANHO]) {
-    printf("\n");
+    system("clear");
         
     for (int row = 0; row < TAMANHO; row++) {
         for (int col = 0; col < TAMANHO; col++) {
@@ -188,9 +188,7 @@ int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenera
             }
             
             int totBacterias = calcularVizinhos(currentGenerationMatrix, row, col, vizinhos, quadrante);
-            
-            printf("%d\n", totBacterias);
-
+        
             if (currentGenerationMatrix[row][col] == 0 && totBacterias == 3) {
                 nextGenerationMatrix[row][col] = 1;
             } else if (currentGenerationMatrix[row][col] == 1 && totBacterias < 2) {
@@ -205,21 +203,43 @@ int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenera
             vizinhos = 0;
         }
     }
+
+    return transferirDados(currentGenerationMatrix, nextGenerationMatrix);
+}
+
+int transferirDados(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]) {
+    int estaVazia = 1;
+
+    for (int row = 0; row < TAMANHO; row++) {
+        for (int col = 0; col < TAMANHO; col++) {
+            currentGenerationMatrix[row][col] = nextGenerationMatrix[row][col];
+            if (currentGenerationMatrix[row][col] == 1) {
+                estaVazia = 0;
+            }
+        }
+    }
+
+    return estaVazia;
 }
 
 
-
 void main() {
-    int currentGenerationMatrix[3][3] = {
-        {0, 1, 1},
-        {1, 1, 1},
-        {0, 0, 0}
-    };
+    int currentGenerationMatrix[TAMANHO][TAMANHO];
     int nextGenerationMatrix[TAMANHO][TAMANHO];
-
-    printMatrix(currentGenerationMatrix);
-    sleep(1);
-
-    proximaGeracao(currentGenerationMatrix, nextGenerationMatrix);
-    printMatrix(nextGenerationMatrix);
+    int resultado = 0;
+    int cont = 0;
+    
+    fillRandom(currentGenerationMatrix);
+    
+    while (1)
+    {   
+        printMatrix(currentGenerationMatrix);
+        if (resultado == 1) {
+            break;
+        }
+        resultado = proximaGeracao(currentGenerationMatrix, nextGenerationMatrix);
+        printf("Geracao: %d\n", cont);
+        sleep(1);
+        cont++;
+    }
 }
