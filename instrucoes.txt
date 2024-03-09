@@ -4,9 +4,10 @@ Simulação de espensão bacteriana
 
 REGRAS DO JOGO
 
--> total de vizinhos < 2 = morte por solidão
--> total de vizinhos > 3 = morte por esgotamento de recursos
--> total de vizinhos >=2 && total de vizinhos <= 3 = vida
+-> vizinhos < 2 = morte por isolamento
+-> vizinhos > 3 = morte por esgotamento de recursos
+-> vizinhos >=2 && vizinhos <= 3 = vida
+-> vizinhos = 3 = vida
 
 - Como representar os cenários?
 Podemos representar através de matrizes bidimencionais
