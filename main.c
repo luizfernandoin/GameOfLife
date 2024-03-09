@@ -84,31 +84,62 @@ int calcularVizinhos(int matrix[TAMANHO][TAMANHO], int row, int col, int totVizi
         //             break;
         //     }
         //     break;
-        // case 5:
-        //     switch (totVizinhos) {
-        //         case 1:
-        //             for (int rowSub = (row - 1); rowSub <= row; rowSub++) {
-        //                 for (int colSub = (col-1); colSub <= (col+1); colSub++) {
-        //                     if (matrix[rowSub][colSub] == 1) totBacterias++;
-        //                 }
-        //             }
-        //             break;
-        //         case 2:
-        //             for (int rowSub = row; rowSub <= (row+1); rowSub++) {
-        //                 for (int colSub = (col-1); colSub <= (col+1); colSub++) {
-        //                     if (matrix[rowSub][colSub] == 1) totBacterias++;
-        //                 }
-        //             }
-        //             break;
-                
-        //         default:
-        //             break;
-        //     }
-        //     break;
+        case 5:
+            switch (quadrante) {
+                case 1:
+                    for (int rowSub = (row - 1); rowSub <= row; rowSub++) {
+                        for (int colSub = (col-1); colSub <= (col+1); colSub++) {
+                            if ((matrix[rowSub][colSub] == 1)) {
+                                if (rowSub != row || colSub != col) {
+                                    totBacterias++;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 2:
+                    for (int rowSub = row; rowSub <= (row+1); rowSub++) {
+                        for (int colSub = (col-1); colSub <= (col+1); colSub++) {
+                            if (matrix[rowSub][colSub] == 1)  {
+                                if (rowSub != row || colSub != col) {
+                                    totBacterias++;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 3:
+                    for (int rowSub = row-1; rowSub <= (row+1); rowSub++) {
+                        for (int colSub = (col-1); colSub <= (col); colSub++) {
+                            if (matrix[rowSub][colSub] == 1) {
+                                if (rowSub != row || colSub != col) {
+                                    totBacterias++;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 4:
+                    for (int rowSub = row-1; rowSub <= (row+1); rowSub++) {
+                        for (int colSub = col; colSub <= (col+1); colSub++) {
+                            if (matrix[rowSub][colSub] == 1) {
+                                if (rowSub != row || colSub != col) {
+                                    totBacterias++;
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+            break;
         case 8:
             for (int rowSub = (row - 1); rowSub <= (row+1); rowSub++) {
                 for (int colSub = (col - 1); colSub <= (col+1); colSub++) {
-                    if (matrix[rowSub][colSub] == 1 && (rowSub != row || colSub != col)) totBacterias++;
+                    if (matrix[rowSub][colSub] == 1) {
+                        if (rowSub != row || colSub != col) {
+                            totBacterias++;
+                        }
+                    }
                 }
             }
             break;
@@ -126,10 +157,14 @@ int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenera
             if ((row > 0 && row < (TAMANHO - 1)) && (col > 0 && col < (TAMANHO - 1))) {
                 vizinhos = 8;
             } 
-            // else if ((row == 0 || row == TAMANHO - 1) || (col == 0 || col == TAMANHO - 1)) {
-            //     vizinhos = 5;
-            //     quadrante = (row == 0) ? 2 : 1;
-            // } else {
+            else if ((row == 0 || row == TAMANHO - 1) || (col == 0 || col == TAMANHO - 1)) {
+                vizinhos = 5;
+                if (row == 0 && (col > 0 && col < TAMANHO-1)) quadrante = 2;
+                else if (row == TAMANHO-1 && (col > 0 && col < TAMANHO-1)) quadrante = 1;
+                else if (col == 0 && (row > 0 && row < TAMANHO-1)) quadrante = 4;
+                else if (col == TAMANHO-1 && (row > 0 && row < TAMANHO-1)) quadrante = 3;
+            } 
+            // else {
             //     vizinhos = 3;
             //     if (row == 0 && col == 0) quadrante = 4;
             //     else if (row == 0 && col == TAMANHO-1) quadrante = 3;
@@ -139,7 +174,9 @@ int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenera
             
             int totBacterias = calcularVizinhos(currentGenerationMatrix, row, col, vizinhos, quadrante);
             
-            if (row == 1 && col == 1) printf("%d\n", totBacterias);
+            if (((row == 0 || row == TAMANHO - 1) && (col > 0 && col < TAMANHO-1)) || ((col == 0 || col == TAMANHO - 1) && (row > 0 && row < TAMANHO-1))) {
+                printf("%d\n", totBacterias);
+            }
 
 
             if (currentGenerationMatrix[row][col] == 0 && totBacterias == 3) {
@@ -151,6 +188,9 @@ int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenera
             } else if (currentGenerationMatrix[row][col] == 1 && (totBacterias == 2 || totBacterias == 3)) {
                 nextGenerationMatrix[row][col] = 1;
             }
+
+            quadrante = 0;
+            vizinhos = 0;
         }
     }
 }
@@ -159,8 +199,8 @@ int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenera
 
 void main() {
     int currentGenerationMatrix[3][3] = {
-        {0, 1, 0},
-        {1, 0, 1},
+        {0, 1, 1},
+        {1, 1, 1},
         {0, 0, 0}
     };
     int nextGenerationMatrix[TAMANHO][TAMANHO];
