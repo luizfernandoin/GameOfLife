@@ -1,0 +1,85 @@
+GAME OF LIFE
+
+Simulação de espensão bacteriana
+
+REGRAS DO JOGO
+
+-> total de vizinhos < 2 = morte por solidão
+-> total de vizinhos > 3 = morte por esgotamento de recursos
+-> total de vizinhos >=2 && total de vizinhos <= 3 = vida
+
+- Como representar os cenários?
+Podemos representar através de matrizes bidimencionais
+
+- Como representar as bacterias?
+Já que vamos representar o cenário em uma matriz, utilizaremos números como 0 e 1: caso o frame seja 0, frame vazio; caso seja 1, é uma bacteria.
+
+      
+      __0__1__2__3__4__5__6__7__8__9_10_11_12_13_14__
+      |                                             |
+   0  | 1  1  0  1  0  1  0  1  0  1  0  1  0  1  0 |
+   1  | 1  0  1  0  1  0  1  0  1  0  1  0  1  0  1 |
+   2  | 0  1  0  1  0  1  0  1  0  1  0  1  0  1  0 |
+   3  | 1  0  1  0  1  0  1  0  1  0  1  0  1  0  1 |
+   4  | 0  1  0  1  0  1  0  1  0  1  0  1  0  1  0 |
+   5  | 1  0  1  0  1  0  1  0  1  0  1  0  1  0  1 |
+   6  | 0  1  0  1  0  1  0  1  0  1  0  1  0  1  0 |
+   7  | 1  0  1  0  1  0  1  0  1  0  1  0  1  0  1 |
+   8  | 0  1  0  1  0  1  0  1  0  1  0  1  0  1  0 |
+   9  | 1  0  1  0  1  0  1  0  1  0  1  0  1  0  1 |
+   10 | 0  1  0  1  0  1  0  1  0  1  0  1  0  1  0 |
+   11 | 1  0  1  0  1  0  1  0  1  0  1  0  1  0  1 |
+   12 | 0  1  0  1  0  1  0  1  0  1  0  1  0  1  0 |
+   13 | 1  0  1  0  1  0  1  0  1  0  1  0  1  0  1 |
+   14 | 0  1  0  1  0  1  0  1  0  1  0  1  0  1  0 |
+      |_____________________________________________|
+
+[
+ 0, 1, 0
+ 1, 0, 1
+ 0, 1, 0
+]
+
+- Como calcular o estado de cada bacteria?
+    vizinhos = 0;
+
+c-1, l-1
+c, l-1
+c+1, l-1
+c-1, l
+c+1, l
+c-1, l+1
+c, l+1,
+c+1 l+1
+
+    . PRIMEIRO VERIFICA SE ESTÁ NO CENTRO
+        l > 0 && l < total de linhas
+        c > 0 && c < total de colunas
+
+        if ((l > 0 && l < total de linhas) && (c > 0 && c < total de colunas))
+            vizinhos = 8;
+
+    . POSSO ANALISAR SE ESTÁ NAS MARGENS
+        l = 0
+        l = total de linhas - 1
+        c = total de colunas - 1
+        c = 0
+        l = 0, c = 0
+        l = 0, c = total de colunas - 1
+        l = total de linhas - 1, c = 0
+        l = total de linhas - 1, c = total de colunas - 1
+
+        else if ((l = 0 || l = tamanho de linhas) || (c = 0 || c = tamanho de colunas))
+        else: ((l = 0 && c = 0 || l = 0 && c = tamanho-1) || (l = tamanho-1, c = 0 || l = 0, c = tamanho-1));
+            vizinhos = 3;
+
+    . FUNÇÃO PARA CONTAR O TOTAL DE VIZINHOS
+        parametros(matriz, linha, coluna, vizinhos, quadrante);
+            switch(vizinhos) {
+                case 3:
+                    switch(quadrante) {
+                        case 1:
+
+                    }
+            }
+    
