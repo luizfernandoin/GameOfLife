@@ -34,13 +34,6 @@ void printMatrix(int matrix[TAMANHO][TAMANHO]) {
         }
         printf("\n");
     }
-
-    // for (int row = 0; row < TAMANHO; row++) {
-    //     for (int col = 0; col < TAMANHO; col++) {
-    //         printf("%d", matrix[row][col]);
-    //     }
-    //     printf("\n");
-    // }
 }
 
 // void cenarioEntrada(int *geracaoAtual[TAMANHO]) {
