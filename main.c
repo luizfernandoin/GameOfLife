@@ -41,7 +41,7 @@ void printMatrix(int matrix[TAMANHO][TAMANHO]) {
 
 // }
 
-int calcularVizinhos(int matrix[TAMANHO][TAMANHO], int row, int col, int totVizinhos, int quadrante) {
+int calcularVizinhosDeselegante(int matrix[TAMANHO][TAMANHO], int row, int col, int totVizinhos, int quadrante) {
     int totBacterias = 0;
 
     switch (totVizinhos) {
@@ -152,6 +152,28 @@ int calcularVizinhos(int matrix[TAMANHO][TAMANHO], int row, int col, int totVizi
                 }
             }
             break;
+    }
+
+    return totBacterias;
+}
+
+int calcularVizinhosElegante(int matrix[TAMANHO][TAMANHO], int row, int col) {
+    int totBacterias = 0;
+
+    int vizinhos_x[3] = {row - 1, row, row + 1};
+    int vizinhos_y[3] = {col - 1, col, col + 1};
+    
+    for (int i = 0; i < 3; i++) {
+        for(int c = 0; c < 3; c++) {
+            int vizinhosX = vizinhos_x[i];
+            int vizinhoY = vizinhos_y[c];
+
+            if (vizinhosX >= 0 && vizinhosX < TAMANHO && vizinhoY >= 0 && vizinhoY < TAMANHO && !(vizinhosX == row && vizinhoY == col)) {
+                if (matrix[vizinhosX][vizinhoY] == 1) {
+                    totBacterias++;
+                }
+            }
+        }
     }
 
     return totBacterias;
