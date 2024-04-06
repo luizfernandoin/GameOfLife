@@ -179,7 +179,7 @@ int calcularVizinhosElegante(int matrix[TAMANHO][TAMANHO], int row, int col) {
     return totBacterias;
 }
 
-int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]) {
+int proximaGeracaoDeselegante(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]) {
     int vizinhos = 0;
     int quadrante = 0;
 
@@ -221,6 +221,43 @@ int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenera
 
     return transferirDados(currentGenerationMatrix, nextGenerationMatrix);
 }
+
+int proximaGeracaoElegante(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]) {
+    int vizinhos = 0;
+    int quadrante = 0;
+
+    for (int row = 0; row < TAMANHO; row++) {
+        for (int col = 0; col < TAMANHO; col++) {          
+            int totBacterias = calcularVizinhos(currentGenerationMatrix, row, col);
+
+            printf("%d ", totBacterias);
+            
+            if (currentGenerationMatrix[row][col] == 1) {
+                if (totBacterias < 2) {
+                    nextGenerationMatrix[row][col] = 0;
+                } else if (totBacterias > 3) {
+                    nextGenerationMatrix[row][col] = 0;
+                } else {
+                    nextGenerationMatrix[row][col] = 1;
+                }
+            } else if (currentGenerationMatrix[row][col] == 0) {
+                if (totBacterias == 3) {
+                    nextGenerationMatrix[row][col] = 1;
+                } else {
+                    nextGenerationMatrix[row][col] = 0;
+                }
+            }
+
+            quadrante = 0;
+            vizinhos = 0;
+        }
+
+        printf("\n");
+    }
+
+    return transferirDados(currentGenerationMatrix, nextGenerationMatrix);
+}
+
 
 int transferirDados(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]) {
     int estaVazia = 1;
