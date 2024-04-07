@@ -3,12 +3,10 @@
 #include <stdio.h>
 #include <unistd.h>
 
-
 void main() {
     int currentGenerationMatrix[TAMANHO][TAMANHO];
     int nextGenerationMatrix[TAMANHO][TAMANHO];
     int resultado = 0;
-    int cont = 0;
     
     fillRandom(currentGenerationMatrix);
     //cenarioEntrada(currentGenerationMatrix);
@@ -20,8 +18,7 @@ void main() {
             break;
         }
         resultado = proximaGeracao(currentGenerationMatrix, nextGenerationMatrix);
-        printf("Geracao: %d\n", cont);
+        imprimirEstatisticasCenario();
         sleep(1);
-        cont++;
     }
 }

@@ -5,6 +5,9 @@
 #include <unistd.h>
 
 const int TAMANHO = 21;
+int bacteriasVivas = 0;
+int bacteriasMortas = 0;
+int geracao = -1;
 
 
 int randomNumber() {
@@ -37,6 +40,13 @@ void printMatrix(int matrix[TAMANHO][TAMANHO]) {
     }
 }
 
+void imprimirEstatisticasCenario() {
+    printf("====================\n");
+    printf("Geracao: %d\n", geracao);
+    printf("Bacterias Vivas: %d\n", bacteriasVivas);
+    printf("Bacterias Mortas: %d\n", bacteriasMortas);
+}
+
 int calcularVizinhos(int matrix[TAMANHO][TAMANHO], int row, int col) {
     int totBacterias = 0;
 
@@ -60,6 +70,9 @@ int calcularVizinhos(int matrix[TAMANHO][TAMANHO], int row, int col) {
 }
 
 int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]) {
+    bacteriasMortas = 0;
+    bacteriasVivas = 0;
+
 
     for (int row = 0; row < TAMANHO; row++) {
         for (int col = 0; col < TAMANHO; col++) {          
@@ -72,12 +85,16 @@ int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenera
                 } else {
                     nextGenerationMatrix[row][col] = 1;
                 }
+
+                bacteriasVivas++;
             } else if (frameAtual == 0) {
                 if (totBacterias == 3) {
                     nextGenerationMatrix[row][col] = 1;
                 } else {
                     nextGenerationMatrix[row][col] = 0;
                 }
+
+                bacteriasMortas++;
             } else {
                 nextGenerationMatrix[row][col] = 0;
             }
@@ -99,5 +116,6 @@ int transferirDados(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGener
         }
     }
 
+    geracao++;
     return estaVazia;
 }
