@@ -9,7 +9,7 @@
 ## Sumário 
 - [Descrição](#descrição)
 - [Regras do Jogo](#regras-do-jogo)
-- [Recursos](#recursos)
+- [Funcionalidades](#funcionalidades)
 - [Instalação](#instalação)
 - [Configuração](#configuração)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
@@ -81,5 +81,5 @@ gcc game_of_life.o main.o -o game_of_life_executable
   </tbody>
 </table>
 
-## Show your support
+## Mostre seu apoio
 Dê uma ⭐️ se este projeto ajudou você!
