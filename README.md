@@ -1,5 +1,5 @@
 <h1 align="center">Game Of Life - Conway</h1>
-<p>
+<p align="center">
   <img alt="Versão" src="https://img.shields.io/badge/vers%C3%A3o-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="LICENSE" target="_blank">
     <img alt="Licença: MIT" src="https://img.shields.io/npm/l/react" />
