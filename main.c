@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 
-const int TAMANHO = 50;
+const int TAMANHO = 21;
 
 int randomNumber() {
     return rand() % 2; 
@@ -36,128 +36,25 @@ void printMatrix(int matrix[TAMANHO][TAMANHO]) {
     }
 }
 
-// void cenarioEntrada(int *geracaoAtual[TAMANHO]) {
-//     //FILE *fopen (const char * "entrada.txt" , const char * access_mode );
-
-// }
-
-int calcularVizinhosDeselegante(int matrix[TAMANHO][TAMANHO], int row, int col, int totVizinhos, int quadrante) {
-    int totBacterias = 0;
-
-    switch (totVizinhos) {
-        case 3:
-            switch(quadrante) {
-                case 1:
-                    for (int rowSub = (row - 1); rowSub <= row; rowSub++) {
-                        for (int colSub = (col - 1); colSub <= col; colSub++) {
-                            if (matrix[rowSub][colSub] == 1) {
-                                if (rowSub != row || colSub != col) {
-                                    totBacterias++;
-                                }
-                            };
-                        }
-                    }
-                    break;
-                case 2:
-                    for (int rowSub = (row - 1); rowSub <= row; rowSub++) {
-                        for (int colSub = col; colSub <= (col+1); colSub++) {
-                            if (matrix[rowSub][colSub] == 1) {
-                                if (rowSub != row || colSub != col) {
-                                    totBacterias++;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case 3:
-                    for (int rowSub = row; rowSub <= (row+1); rowSub++) {
-                        for (int colSub = (col - 1); colSub <= col; colSub++) {
-                            if (matrix[rowSub][colSub] == 1) {
-                                if (rowSub != row || colSub != col) {
-                                    totBacterias++;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case 4:
-                    for (int rowSub = row; rowSub <= (row+1); rowSub++) {
-                        for (int colSub = col; colSub <= (col+1); colSub++) {
-                            if (matrix[rowSub][colSub] == 1) {
-                                if (rowSub != row || colSub != col) {
-                                    totBacterias++;
-                                }
-                            }
-                        }
-                    }
-                    break;
-            }
-            break;
-        case 5:
-            switch (quadrante) {
-                case 1:
-                    for (int rowSub = (row - 1); rowSub <= row; rowSub++) {
-                        for (int colSub = (col-1); colSub <= (col+1); colSub++) {
-                            if ((matrix[rowSub][colSub] == 1)) {
-                                if (rowSub != row || colSub != col) {
-                                    totBacterias++;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case 2:
-                    for (int rowSub = row; rowSub <= (row+1); rowSub++) {
-                        for (int colSub = (col-1); colSub <= (col+1); colSub++) {
-                            if (matrix[rowSub][colSub] == 1)  {
-                                if (rowSub != row || colSub != col) {
-                                    totBacterias++;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case 3:
-                    for (int rowSub = row-1; rowSub <= (row+1); rowSub++) {
-                        for (int colSub = (col-1); colSub <= (col); colSub++) {
-                            if (matrix[rowSub][colSub] == 1) {
-                                if (rowSub != row || colSub != col) {
-                                    totBacterias++;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case 4:
-                    for (int rowSub = row-1; rowSub <= (row+1); rowSub++) {
-                        for (int colSub = col; colSub <= (col+1); colSub++) {
-                            if (matrix[rowSub][colSub] == 1) {
-                                if (rowSub != row || colSub != col) {
-                                    totBacterias++;
-                                }
-                            }
-                        }
-                    }
-                    break;
-            }
-            break;
-        case 8:
-            for (int rowSub = (row - 1); rowSub <= (row+1); rowSub++) {
-                for (int colSub = (col - 1); colSub <= (col+1); colSub++) {
-                    if (matrix[rowSub][colSub] == 1) {
-                        if (rowSub != row || colSub != col) {
-                            totBacterias++;
-                        }
-                    }
-                }
-            }
-            break;
+void cenarioEntrada(int geracaoAtual[TAMANHO][TAMANHO]) {
+    FILE *arquivo;
+    arquivo = fopen("entrada.txt", "r");
+    
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.");
+        return;
     }
-
-    return totBacterias;
+    
+    for (int i = 0; i < TAMANHO; i++) {
+        for (int j = 0; j < TAMANHO; j++) {
+            fscanf(arquivo, "%1d", &geracaoAtual[i][j]);
+        }
+    }
+    
+    fclose(arquivo);
 }
 
-int calcularVizinhosElegante(int matrix[TAMANHO][TAMANHO], int row, int col) {
+int calcularVizinhos(int matrix[TAMANHO][TAMANHO], int row, int col) {
     int totBacterias = 0;
 
     int vizinhos_x[3] = {row - 1, row, row + 1};
@@ -179,80 +76,29 @@ int calcularVizinhosElegante(int matrix[TAMANHO][TAMANHO], int row, int col) {
     return totBacterias;
 }
 
-int proximaGeracaoDeselegante(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]) {
-    int vizinhos = 0;
-    int quadrante = 0;
-
-    for (int row = 0; row < TAMANHO; row++) {
-        for (int col = 0; col < TAMANHO; col++) {
-            if ((row > 0 && row < (TAMANHO - 1)) && (col > 0 && col < (TAMANHO - 1))) {
-                vizinhos = 8;
-            } 
-            else if (((row == 0 || row == TAMANHO - 1) && (col > 0 && col < TAMANHO-1)) || ((col == 0 || col == TAMANHO - 1) && (row > 0 && row<TAMANHO-1)) ) {
-                vizinhos = 5;
-                if (row == 0 && (col > 0 && col < TAMANHO-1)) quadrante = 2;
-                else if (row == TAMANHO-1 && (col > 0 && col < TAMANHO-1)) quadrante = 1;
-                else if (col == 0 && (row > 0 && row < TAMANHO-1)) quadrante = 4;
-                else if (col == TAMANHO-1 && (row > 0 && row < TAMANHO-1)) quadrante = 3;
-            } else {
-                vizinhos = 3;
-                if (row == 0 && col == 0) quadrante = 4;
-                else if (row == 0 && col == TAMANHO-1) quadrante = 3;
-                else if (row == TAMANHO-1 && col == 0) quadrante = 2;
-                else quadrante = 1;
-            }
-            
-            int totBacterias = calcularVizinhos(currentGenerationMatrix, row, col, vizinhos, quadrante);
-        
-            if (currentGenerationMatrix[row][col] == 0 && totBacterias == 3) {
-                nextGenerationMatrix[row][col] = 1;
-            } else if (currentGenerationMatrix[row][col] == 1 && totBacterias < 2) {
-                nextGenerationMatrix[row][col] = 0;
-            } else if (currentGenerationMatrix[row][col] == 1 && totBacterias > 3) {
-                nextGenerationMatrix[row][col] = 0;
-            } else if (currentGenerationMatrix[row][col] == 1 && (totBacterias == 2 || totBacterias == 3)) {
-                nextGenerationMatrix[row][col] = 1;
-            }
-
-            quadrante = 0;
-            vizinhos = 0;
-        }
-    }
-
-    return transferirDados(currentGenerationMatrix, nextGenerationMatrix);
-}
-
-int proximaGeracaoElegante(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]) {
-    int vizinhos = 0;
-    int quadrante = 0;
+int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]) {
 
     for (int row = 0; row < TAMANHO; row++) {
         for (int col = 0; col < TAMANHO; col++) {          
             int totBacterias = calcularVizinhos(currentGenerationMatrix, row, col);
-
-            printf("%d ", totBacterias);
+            int frameAtual = currentGenerationMatrix[row][col];
             
-            if (currentGenerationMatrix[row][col] == 1) {
-                if (totBacterias < 2) {
-                    nextGenerationMatrix[row][col] = 0;
-                } else if (totBacterias > 3) {
+            if (frameAtual == 1) {
+                if (totBacterias < 2 || totBacterias > 3) {
                     nextGenerationMatrix[row][col] = 0;
                 } else {
                     nextGenerationMatrix[row][col] = 1;
                 }
-            } else if (currentGenerationMatrix[row][col] == 0) {
+            } else if (frameAtual == 0) {
                 if (totBacterias == 3) {
                     nextGenerationMatrix[row][col] = 1;
                 } else {
                     nextGenerationMatrix[row][col] = 0;
                 }
+            } else {
+                nextGenerationMatrix[row][col] = 0;
             }
-
-            quadrante = 0;
-            vizinhos = 0;
         }
-
-        printf("\n");
     }
 
     return transferirDados(currentGenerationMatrix, nextGenerationMatrix);
@@ -282,7 +128,8 @@ void main() {
     int cont = 0;
     
     fillRandom(currentGenerationMatrix);
-    
+    //cenarioEntrada(currentGenerationMatrix);
+
     while (1)
     {   
         printMatrix(currentGenerationMatrix);
