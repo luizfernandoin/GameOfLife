@@ -21,6 +21,15 @@ O Jogo da Vida, criado pelo matemático britânico John Horton Conway em 1970, �
 
 Este projeto implementa uma versão do Jogo da Vida em C, onde uma grade bidimensional de células vivas e mortas evolui ao longo do tempo de acordo com regras específicas. As células podem estar em dois estados: viva (representada por "■") ou morta (representada por "□"). A cada geração, as células mudam de estado com base na quantidade de células vizinhas vivas.
 
+## Regras do Jogo
+
+As células evoluem de acordo com as seguintes regras:
+
+1. Qualquer célula viva com menos de dois vizinhos vivos morre de solidão.
+2. Qualquer célula viva com dois ou três vizinhos vivos vive para a próxima geração.
+3. Qualquer célula viva com mais de três vizinhos vivos morre de superpopulação.
+4. Qualquer célula morta com exatamente três vizinhos vivos se torna uma célula viva.
+
 ## Funcionalidades
 
 - 🎮 Geração automática de padrões iniciais aleatórios ou importação de padrões a partir de um arquivo de entrada.
