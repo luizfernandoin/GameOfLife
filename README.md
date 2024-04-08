@@ -35,6 +35,9 @@ As células evoluem de acordo com as seguintes regras:
 - 🎮 Geração automática de padrões iniciais aleatórios ou importação de padrões a partir de um arquivo de entrada.
 - 🖥️ Visualização em tempo real da evolução do padrão no console.
 - 🌐 Interface gráfica simples para uma experiência visual mais imersiva.
+- 🔄 Possibilidade de ajustar a velocidade de evolução do jogo.
+- 📁 Salvamento automático do estado atual do jogo.
+- 📊 Estatísticas detalhadas sobre a evolução do padrão, como número de células vivas e mortas em cada geração.
 - 📝 Documentação abrangente com instruções de uso, descrição das regras do jogo e informações sobre o projeto.
 
 ## Instalação
@@ -53,20 +56,33 @@ Aqui está um resumo de como configurar o aplicativo:
 * **Passo 3** : Ainda no terminal, verifique se possui o GNU instalado, precisa-se dele;
 * **Passo 4** : Execute o programa através do seguinte comando:
 ```jsx
-    ./game_of_life_executable
+    ./game_of_life_exe
 ```
 * **Passo 5** : Caso não tenha conseguido executar o programa, faça:
 ``` jsx
 
-// Compila o arquivo game_of_life.c e produz um arquivo objeto chamado game_of_life.o.
-gcc -c game_of_life.c -o game_of_life.o
+// Compila os arquivo system_info.c, game_of_life.c, file.c e main.c, vincula (linka) os arquivos objeto produzidos e, forma um executável chamado game_of_life_exe.
+gcc system_info.c game_of_life.c file.c main.c -o game_of_life_exe
 
-// Produz um arquivo objeto chamado main.o.
-gcc -c main.c -o main.o
-
-// Vincula (linka) os dois arquivos objeto game_of_life.o e main.o para formar um executável chamado game_of_life_executable.
-gcc game_of_life.o main.o -o game_of_life_executable
 ```
+
+## Argumentos de Inicialização
+
+Este programa permite configurar três argumentos opcionais para controlar o comportamento do Game of Life.
+
+### Uso
+
+```jsx
+./game_of_life_exe [OPÇÕES]
+```
+
+
+| Args  | Descrição | Exemplo | Default |
+| ------------- | ------------- | ------------- | ------------- |
+| `rows=<valor>`  | Define o número de linhas na grade do Game of Life. | `./game_of_life_executavel rows=30` | `rows=20` |
+| `cols=<valor>`  | Define o número de colunas na grade do Game of Life. | `./game_of_life_executavel cols=40` | `cols=20` |
+| `sleep=<valor>`  | Define o intervalo de tempo (em segundos) entre gerações. | `./game_of_life_executavel sleep=2` | `sleep=1` |
+
 
 ## Tecnologias Utilizadas
 * C
