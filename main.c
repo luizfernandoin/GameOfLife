@@ -19,6 +19,7 @@ void main() {
         }
         resultado = proximaGeracao(currentGenerationMatrix, nextGenerationMatrix);
         imprimirEstatisticasCenario();
+        
         sleep(1);
     }
 }

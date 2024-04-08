@@ -1,4 +1,6 @@
 #include "game_of_life.h"
+#include "system_info.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -45,6 +47,8 @@ void imprimirEstatisticasCenario() {
     printf("Geracao: %d\n", geracao);
     printf("Bacterias Vivas: %d\n", bacteriasVivas);
     printf("Bacterias Mortas: %d\n", bacteriasMortas);
+    
+    imprimirEstatisticasDoSistema();
 }
 
 int calcularVizinhos(int matrix[TAMANHO][TAMANHO], int row, int col) {
