@@ -35,7 +35,7 @@ void imprimirEstatisticasCPU() {
     fclose(stat_file);
 
     float usoCPU = 100.0 * (1.0 - ((float)tempoOciosidadeCPU / (float)tempoTotal));
-    printf("Uso da CPU: %.2f%%\n", usoCPU);
+    printf("CPU: %.2f%%\n", usoCPU);
 }
 
 
@@ -53,8 +53,10 @@ void imprimirEstatisticasRAM() {
     long total_ram_mb = total_ram_kb / 1024;
     long free_ram_mb = free_ram_kb / 1024;
 
-    printf("Memória total: %ld MB\n", total_ram_mb);
-    printf("Memória livre: %ld MB\n", free_ram_mb);
+    long used_ram_mb = total_ram_mb - free_ram_mb;
+    float percent_used = (float)used_ram_mb / total_ram_mb * 100.0;
+    printf("RAM: %.2f%%\n", percent_used);
+
 }
 
 void imprimirEstatisticasDoSistema() {
