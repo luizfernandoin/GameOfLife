@@ -1,14 +1,19 @@
 #ifndef GAME_OF_LIFE_H
 #define GAME_OF_LIFE_H
 
-extern const int TAMANHO;
+extern int linhas;
+extern int colunas;
 
+void setLinhas(int numLinhas);
+void setColunas(int numColunas);
+int getLinhas();
+int getColunas();
 int randomNumber();
-void fillRandom(int currentGenerationMatrix[TAMANHO][TAMANHO]);
-void printMatrix(int matrix[TAMANHO][TAMANHO]);
+void fillRandom(int currentGenerationMatrix[linhas][colunas]);
+void printMatrix(int matrix[linhas][colunas]);
 void imprimirEstatisticasCenario();
-int calcularVizinhos(int matrix[TAMANHO][TAMANHO], int row, int col);
-int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]);
-int transferirDados(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]);
+int calcularVizinhos(int matrix[linhas][colunas], int row, int col);
+int proximaGeracao(int currentGenerationMatrix[linhas][colunas], int nextGenerationMatrix[linhas][colunas]);
+int transferirDados(int currentGenerationMatrix[linhas][colunas], int nextGenerationMatrix[linhas][colunas]);
 
 #endif

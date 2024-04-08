@@ -1,37 +1,54 @@
 #include "game_of_life.h"
 #include "system_info.h"
+#include "file.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
 
-const int TAMANHO = 21;
 int bacteriasVivas = 0;
 int bacteriasMortas = 0;
 int geracao = -1;
+int linhas = 20;
+int colunas = 20;
 
+void setLinhas(int numLinhas) {
+    linhas = numLinhas;
+}
+
+void setColunas(int numColunas) {
+    colunas = numColunas;
+}
+
+int getLinhas() {
+    return linhas;
+}
+
+int getColunas() {
+    return colunas;
+}
 
 int randomNumber() {
     return rand() % 2; 
 }
 
-void fillRandom(int currentGenerationMatrix[TAMANHO][TAMANHO]) {
+void fillRandom(int currentGenerationMatrix[linhas][colunas]) {
     srand((unsigned)time(NULL));
 
-    for (int row = 0; row < TAMANHO; row++) {
-        for (int col = 0; col < TAMANHO; col++){
+    for (int row = 0; row < linhas; row++) {
+        for (int col = 0; col < colunas; col++){
             int num = randomNumber();
             currentGenerationMatrix[row][col] = num;
         }
     }
 }
 
-void printMatrix(int matrix[TAMANHO][TAMANHO]) {
+void printMatrix(int matrix[linhas][colunas]) {
     system("clear");
         
-    for (int row = 0; row < TAMANHO; row++) {
-        for (int col = 0; col < TAMANHO; col++) {
+    for (int row = 0; row < linhas; row++) {
+        for (int col = 0; col < colunas; col++) {
             if (matrix[row][col] == 1) {
                 printf("■ ");
             } else {
@@ -51,7 +68,7 @@ void imprimirEstatisticasCenario() {
     imprimirEstatisticasDoSistema();
 }
 
-int calcularVizinhos(int matrix[TAMANHO][TAMANHO], int row, int col) {
+int calcularVizinhos(int matrix[linhas][colunas], int row, int col) {
     int totBacterias = 0;
 
     int vizinhos_x[3] = {row - 1, row, row + 1};
@@ -62,7 +79,7 @@ int calcularVizinhos(int matrix[TAMANHO][TAMANHO], int row, int col) {
             int vizinhosX = vizinhos_x[i];
             int vizinhoY = vizinhos_y[c];
 
-            if (vizinhosX >= 0 && vizinhosX < TAMANHO && vizinhoY >= 0 && vizinhoY < TAMANHO && !(vizinhosX == row && vizinhoY == col)) {
+            if (vizinhosX >= 0 && vizinhosX < linhas && vizinhoY >= 0 && vizinhoY < colunas && !(vizinhosX == row && vizinhoY == col)) {
                 if (matrix[vizinhosX][vizinhoY] == 1) {
                     totBacterias++;
                 }
@@ -73,13 +90,13 @@ int calcularVizinhos(int matrix[TAMANHO][TAMANHO], int row, int col) {
     return totBacterias;
 }
 
-int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]) {
+int proximaGeracao(int currentGenerationMatrix[linhas][colunas], int nextGenerationMatrix[linhas][colunas]) {
     bacteriasMortas = 0;
     bacteriasVivas = 0;
 
 
-    for (int row = 0; row < TAMANHO; row++) {
-        for (int col = 0; col < TAMANHO; col++) {          
+    for (int row = 0; row < linhas; row++) {
+        for (int col = 0; col < colunas; col++) {          
             int totBacterias = calcularVizinhos(currentGenerationMatrix, row, col);
             int frameAtual = currentGenerationMatrix[row][col];
             
@@ -108,17 +125,19 @@ int proximaGeracao(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenera
     return transferirDados(currentGenerationMatrix, nextGenerationMatrix);
 }
 
-int transferirDados(int currentGenerationMatrix[TAMANHO][TAMANHO], int nextGenerationMatrix[TAMANHO][TAMANHO]) {
+int transferirDados(int currentGenerationMatrix[linhas][colunas], int nextGenerationMatrix[linhas][colunas]) {
     int estaVazia = 1;
 
-    for (int row = 0; row < TAMANHO; row++) {
-        for (int col = 0; col < TAMANHO; col++) {
+    for (int row = 0; row < linhas; row++) {
+        for (int col = 0; col < colunas; col++) {
             currentGenerationMatrix[row][col] = nextGenerationMatrix[row][col];
             if (currentGenerationMatrix[row][col] == 1) {
                 estaVazia = 0;
             }
         }
     }
+
+    salvarCenario(currentGenerationMatrix);
 
     geracao++;
     return estaVazia;
